@@ -136,6 +136,18 @@ class VisualReviewClient {
       })
     })
   }
+  getJsonStatusForCurrentRun() {
+    return this._callServer('GET', `runs/${this._createdRun.id}/analysis`).then(
+      result => {
+        return JSON.parse(result)
+      },
+      error => {
+        throw new Error(
+          'Received error response from VisualReview server: ' + error
+        )
+      }
+    )
+  }
 }
 
 module.exports = VisualReviewClient
