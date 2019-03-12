@@ -83,7 +83,7 @@ class VisualReviewClient {
       },
       error => {
         throw new Error(
-          'Received error response from VisualReview server: ' + error
+          `Received error response from VisualReview server: ${error}`
         )
       }
     )
@@ -98,7 +98,7 @@ class VisualReviewClient {
       })
       .catch(error => {
         throw new Error(
-          'VisualReview: an error occured while initializing a run: ' + error
+          `VisualReview: an error occured while initializing a run:  ${error}`
         )
       })
   }
@@ -131,7 +131,7 @@ class VisualReviewClient {
         )
           .then(resolve)
           .catch(error => {
-            throw new Error('Error while uploading screenshot ' + error)
+            throw new Error(`Error while uploading screenshot ${error}`)
           })
       })
     })
@@ -143,7 +143,7 @@ class VisualReviewClient {
       },
       error => {
         throw new Error(
-          'Received error response from VisualReview server: ' + error
+          `Received error response from VisualReview server: ${error}`
         )
       }
     )
