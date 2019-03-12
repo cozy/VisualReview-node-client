@@ -8,12 +8,11 @@ export default {
   hostname: 'localhost',
   port: 7000,
 
-  meta: { },
+  meta: {},
 
   properties: {
     os: '',
     browser: '',
     version: ''
   }
-
-};
+}
