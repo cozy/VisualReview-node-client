@@ -1,6 +1,6 @@
 {
   "name": "visualreview-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node.js client for VisualReview",
   "homepage": "https://github.com/klaasvaak/VisualReview-node-client",
   "main": "index.js",
