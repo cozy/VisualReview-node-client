@@ -1,16 +1,16 @@
-import request from 'request'
-import fs from 'fs'
-import url from 'url'
-import { EOL } from 'os'
-import defaultOptions from './defaultOptions'
+const request = require('request')
+const fs = require('fs')
+const url = require('url')
+const EOL = require('os')
+const defaultOptions = require('./defaultOptions')
 
 const API_VERSION = '1'
 
-export default class VisualReviewClient {
+class VisualReviewClient {
   constructor(options) {
     this._createdRun = {}
 
-    this.options = Object.assign(options, defaultOptions)
+    this.options = Object.assign(defaultOptions, options)
   }
 
   _log(message, objectDump) {
@@ -45,10 +45,8 @@ export default class VisualReviewClient {
       Object.assign(requestOptions, { formData })
 
       this._log(method + ' ' + requestOptions.uri + EOL, requestOptions)
-
       request(requestOptions, (error, response, body) => {
         const statusCode = response.statusCode
-
         if (error || (statusCode >= 400 && statusCode < 600)) {
           this._log('ERROR for request', { error, response, body })
           reject(error)
@@ -63,7 +61,7 @@ export default class VisualReviewClient {
     return this._callServer('GET', 'version').then(result => {
       if (result !== API_VERSION) {
         this._log(
-          `WARNING! Server\'s API version is ${result}. Expecting version: ${API_VERSION}`
+          `WARNING! Server's API version is ${result}. Expecting version: ${API_VERSION}`
         )
       }
     })
@@ -100,8 +98,7 @@ export default class VisualReviewClient {
       })
       .catch(error => {
         throw new Error(
-          'VisualReview-protractor: an error occured while initializing a run: ' +
-            error
+          'VisualReview: an error occured while initializing a run: ' + error
         )
       })
   }
@@ -110,28 +107,25 @@ export default class VisualReviewClient {
     this._log(`Start uploading ${fileName}`)
 
     return new Promise(resolve => {
-      fs.readFile(fileName, (image, error) => {
+      fs.readFile(fileName, (error, image) => {
         if (error) {
           throw new Error(`Error while reading file: ${fileName}`)
         }
-
-        const formData = Object.assign(
-          {
-            file: {
-              value: image,
-              options: {
-                fileName,
-                contentType: 'image/png'
-              }
+        const formData = Object.assign({
+          file: {
+            value: image,
+            options: {
+              filename: fileName,
+              contentType: 'image/png'
             }
           },
-          { meta: JSON.stringify(this.options.meta) },
-          { properties: JSON.stringify(this.options.properties) }
-        )
-
+          screenshotName: fileName,
+          meta: JSON.stringify(this.options.meta),
+          properties: JSON.stringify(this.options.properties)
+        })
         this._callServer(
           'POST',
-          `runs/${this._createdRun.run_id}/screenshots`,
+          `runs/${this._createdRun.id}/screenshots`,
           null,
           formData
         )
@@ -143,3 +137,5 @@ export default class VisualReviewClient {
     })
   }
 }
+
+module.exports = VisualReviewClient

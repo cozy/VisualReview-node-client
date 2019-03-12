@@ -1,12 +1,12 @@
-export default {
+module.exports = {
   debug: false,
   projectName: '',
   suiteName: '',
 
   // Server
-  protocol: 'http',
-  hostname: 'localhost',
-  port: 7000,
+  protocol: '',
+  hostname: '',
+  port: '',
 
   meta: {},
 
