@@ -122,7 +122,8 @@ class VisualReviewClient {
           screenshotName: fileName,
           meta: JSON.stringify(this.options.meta),
           properties: JSON.stringify(this.options.properties),
-          compareSettings: JSON.stringify(this.options.compareSettings)
+          compareSettings: JSON.stringify(this.options.compareSettings),
+          mask: JSON.stringify(this.options.mask)
         })
         this._callServer(
           'POST',
